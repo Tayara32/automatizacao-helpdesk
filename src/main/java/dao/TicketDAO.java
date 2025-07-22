@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
  *   <li>Registrar novos tickets no banco de dados.</li>
  *   <li>Gerar o ID do ticket recém-criado.</li>
  * </ul>
- * </p>
  */
 
 public class TicketDAO {
