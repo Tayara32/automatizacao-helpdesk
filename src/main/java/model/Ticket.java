@@ -2,6 +2,14 @@ package model;
 
 import java.time.LocalDateTime;
 
+/**
+ * Representa um ticket aberto quando a resposta do chatbot não é satisfatória.
+ * <p>
+ * Os tickets contêm informações sobre a pergunta original, data de criação,
+ * status atual e o ID relacionado à base de conhecimento.
+ * </p>
+ */
+
 public class Ticket {
     private int id;
     private String pergunta;

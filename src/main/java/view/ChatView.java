@@ -5,15 +5,33 @@ import controller.ChatController;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Interface gráfica do chatbot.
+ * <p>
+ * Permite ao usuário digitar perguntas, visualizar respostas e enviar feedback de utilidade.
+ * </p>
+ */
+
 public class ChatView {
     private ChatController controller;
     private JTextField campoPergunta;
     private JTextArea areaResposta;
 
+
+    /**
+     * Construtor da interface, recebendo o controller.
+     *
+     * @param controller Controlador do chatbot.
+     */
     public ChatView(ChatController controller) {
         this.controller = controller;
     }
 
+
+    /**
+     * Inicializa a interface do usuário.
+     * Cria a janela, campos de entrada, área de resposta e botões.
+     */
     public void initUI() {
         JFrame frame = new JFrame("HelpDesk Bot");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,7 +44,7 @@ public class ChatView {
 
         btnEnviar.addActionListener(e -> {
             String pergunta = campoPergunta.getText();
-            controller.buscarResposta(pergunta); // Agora a controller cuida de tudo
+            controller.buscarResposta(pergunta);
         });
 
         JPanel painel = new JPanel(new BorderLayout());
@@ -37,6 +55,15 @@ public class ChatView {
         frame.add(painel);
         frame.setVisible(true);
     }
+
+
+    /**
+     * Mostra a resposta com botões de feedback.
+     *
+     * @param resposta        Texto da resposta.
+     * @param perguntaOriginal Texto da pergunta original.
+     * @param perguntaId      ID da pergunta selecionada.
+     */
     public void mostrarRespostaComFeedback(String resposta, String perguntaOriginal, int perguntaId){
         JFrame frameFeedback = new JFrame("Feedback");
         frameFeedback.setSize(400, 200);
@@ -75,10 +102,6 @@ public class ChatView {
         frameFeedback.setLocationRelativeTo(null);
         frameFeedback.setVisible(true);
     }
-
-
-
-
 
 
 }

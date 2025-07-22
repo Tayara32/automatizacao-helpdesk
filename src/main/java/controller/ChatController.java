@@ -14,19 +14,43 @@ import java.util.Optional;
 
 import static util.QRCodeGenerator.gerarQRCode;
 
+/**
+ * Controlador principal do chatbot.
+ *
+ * Responsável por:
+ * <ul>
+ *   <li>Gerenciar a comunicação entre a interface (ChatView) e os DAOs.</li>
+ *   <li>Pesquisar respostas na base de conhecimento.</li>
+ *   <li>Criar tickets quando as respostas não são satisfatórias.</li>
+ *   <li>Gerar QR Codes para tickets abertos.</li>
+ * </ul>
+ */
 
 public class ChatController {
     private ChatView view;
     private KnowledgeBaseDAO kbDAO;
     private TicketDAO ticketDAO;
 
+    /**
+     * Inicializa os componentes principais do sistema:
+     * <ul>
+     *   <li>Instancia os DAOs de base de conhecimento e tickets.</li>
+     *   <li>Cria a interface do chatbot.</li>
+     * </ul>
+     */
+
     public void init() {
         kbDAO = new KnowledgeBaseDAO();    // Cria o acesso à base de conhecimento
         ticketDAO = new TicketDAO();       // Cria o gerenciador de tickets
-        view = new ChatView(this);         // Cria a interface gráfica e passa o controller
+        view = new ChatView(this);// Cria a interface gráfica e passa o controller
         view.initUI();                     // Mostra a janela com botões, campo de pergunta etc.
     }
 
+    /**
+     * Pesquisa por uma palavra-chave na base de conhecimento e exibe sugestões.
+     *
+     * @param palavraChave Texto ou palavra-chave informada pelo usuário.
+     */
 
     public void buscarResposta(String palavraChave) {
         List<KnowledgeEntry> sugestoes = kbDAO.buscarSugestoes(palavraChave);
@@ -65,6 +89,14 @@ public class ChatController {
             view.mostrarRespostaComFeedback("Nenhuma pergunta foi selecionada.", palavraChave, -1);
         }
     }
+
+    /**
+     * Abre um novo ticket quando a resposta não foi útil.
+     * Também gera um QR Code com as informações do ticket.
+     *
+     * @param perguntaTexto Texto da pergunta original feita pelo usuário.
+     * @param perguntaId    ID da pergunta selecionada na base de conhecimento.
+     */
 
     public void abrirTicket(String perguntaTexto, int perguntaId) {
         KnowledgeBaseDAO.marcarComoIneficaz(perguntaTexto);

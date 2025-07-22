@@ -3,12 +3,29 @@ package model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Representa uma entrada (pergunta e resposta) da base de conhecimento.
+ * <p>
+ * Contém os dados necessários para exibir as respostas do chatbot e gerenciar a eficácia das perguntas.
+ * </p>
+ */
+
 public class KnowledgeEntry {
     private int id;
     private String pergunta;
     private String resposta;
     private boolean eficaz;
     private LocalDateTime ultimaAtualizacao;
+
+    /**
+     * Construtor completo da entrada da base de conhecimento.
+     *
+     * @param id                ID único da entrada.
+     * @param pergunta          Texto da pergunta.
+     * @param resposta          Texto da resposta.
+     * @param eficaz            Indica se a pergunta ainda é eficaz (TRUE/FALSE).
+     * @param ultimaAtualizacao Data e hora da última modificação.
+     */
 
     public KnowledgeEntry(int id, String pergunta, String resposta, boolean eficaz, LocalDateTime ultimaAtualizacao) {
         this.id = id;
