@@ -1,4 +1,5 @@
 import controller.ChatController;
+import view.LoginView;
 
 
 /**
@@ -16,9 +17,7 @@ public class Main {
      *
      * @param args Argumentos da linha de comando (não utilizados).
      */
-
-
     public static void main(String[] args) {
-        new ChatController().init();
+        javax.swing.SwingUtilities.invokeLater(() -> new LoginView().setVisible(true));
     }
 }

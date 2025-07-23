@@ -1,6 +1,8 @@
 package view;
 
 import controller.ChatController;
+import model.Utilizador;
+import util.Session;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,16 +33,42 @@ public class ChatView {
     /**
      * Inicializa a interface do usuário.
      * Cria a janela, campos de entrada, área de resposta e botões.
+     * Exibe uma mensagem de boas-vindas personalizada.
      */
     public void initUI() {
-        JFrame frame = new JFrame("HelpDesk Bot");
+        // Obtém o utilizador logado
+        Utilizador user = Session.getUtilizador();
+        String perfilMsg;
+        switch (user.getPerfilId()) {
+            case 1:
+                perfilMsg = "Administrador";
+                break;
+            case 2:
+                perfilMsg = "Colaborador";
+                break;
+            case 3:
+                perfilMsg = "Backoffice";
+                break;
+            default:
+                perfilMsg = "Utilizador";
+        }
+
+        // Janela principal
+        JFrame frame = new JFrame("HelpDesk Bot - " + perfilMsg + " " + user.getNome());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 400);
+
+        // adiciona o ícone da aplicação
+        ImageIcon icon = new ImageIcon(getClass().getResource("/images/icone.png"));
+        frame.setIconImage(icon.getImage());
 
         campoPergunta = new JTextField();
         JButton btnEnviar = new JButton("Enviar");
         areaResposta = new JTextArea();
         areaResposta.setEditable(false);
+
+        // Mensagem de boas-vindas
+        areaResposta.setText("Olá " + perfilMsg + " " + user.getNome() + "! Como posso ajudar hoje?");
 
         btnEnviar.addActionListener(e -> {
             String pergunta = campoPergunta.getText();

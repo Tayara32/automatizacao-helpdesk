@@ -99,17 +99,24 @@ public class ChatController {
      */
 
     public void abrirTicket(String perguntaTexto, int perguntaId) {
+        // Marca como ineficaz (se não ajudou)
         KnowledgeBaseDAO.marcarComoIneficaz(perguntaTexto);
 
+        // Salva ticket no banco
         int ticketId = ticketDAO.salvarTicket(perguntaTexto, perguntaId);
-        System.out.println(">> Ticket criado com ID: " + ticketId);
+        int userId = util.Session.getUtilizador() != null ? util.Session.getUtilizador().getId() : -1;
 
+        System.out.println(">> Ticket criado com ID: " + ticketId + " para usuário ID: " + userId);
+
+        // Monta informações para o QR Code
         String dadosTicket = "Ticket ID: " + ticketId + "\n" +
+                "Usuário ID: " + userId + "\n" +
                 "Assunto: " + perguntaTexto + "\n" +
                 "ID da pergunta base: " + perguntaId + "\n" +
                 "Data: " + LocalDateTime.now() + "\n" +
                 "Status: Aberto";
 
+        // Gera e exibe QR Code
         try {
             Image qrImage = gerarQRCode(dadosTicket, 250, 250);
             ImageIcon icon = new ImageIcon(qrImage);
@@ -119,6 +126,7 @@ public class ChatController {
             JOptionPane.showMessageDialog(null, "Erro ao gerar QR Code.");
         }
     }
+
 
 
 }
